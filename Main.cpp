@@ -16,7 +16,7 @@ bool initSDL();
 void quitSDL();
 Vector2 getVec(double a, double b);
 
-int main(char* args[])
+int main(int argc, char* args[])
 {
 	bool quit = false;
 	SDL_Event e;
