@@ -10,8 +10,10 @@ class Element
 
 public:
 	Element();
+	Element(Vector2 pos, Texture tex);
+	Element(Vector2 pos, char* texturePath, SDL_Renderer* renderer);
 	~Element();
 	void tick(); //Update element. Functionality comes from child classes.
-	void render(SDL_Renderer* renderer);
+	void renderSelf(SDL_Renderer* renderer);
 };
 

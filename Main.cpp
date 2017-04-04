@@ -5,16 +5,27 @@
 #include <SDL_image.h>
 #include "Texture.h"
 #include <cmath>
+#include "Scene.h"
+#include "Element.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+
+//SDL variables
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
+
+//Current game state
+enum State {mainMenu=0, game, pauseMenu};
+State state = mainMenu;
+//Scenes
+std::vector<Scene> scenes;
 
 bool initSDL();
 void quitSDL();
 Vector2 getVec(double a, double b);
+void createScenes();
 
 int main(int argc, char* args[])
 {
@@ -26,9 +37,9 @@ int main(int argc, char* args[])
 		std::cout << "initFail" << SDL_GetError();
 		std::cin.get();
 	}
-
 	else
 	{
+		createScenes();
 		while (!quit)
 		{
 			while (SDL_PollEvent(&e) != 0)
@@ -46,6 +57,7 @@ int main(int argc, char* args[])
 				}
 			}
 			SDL_RenderClear(renderer);
+			scenes[state].loop();
 			SDL_RenderPresent(renderer);
 		}
 	}
@@ -116,4 +128,16 @@ Vector2 getVec(double a, double b)
 {
 	Vector2 temp(a, b);
 	return temp;
+}
+
+void createScenes() //At some point this will load things from a file of some sort. Hardcoded for now.
+{
+	//Main Menu
+	std::vector<Element*> e;
+	Element *e0 = new Element(getVec(100, 200), "assets/images/dot.png", renderer);
+	Element *e1 = new Element(getVec(200, 200), "assets/images/dot.png", renderer);
+	e.push_back(e0);
+	e.push_back(e1);
+	Scene mainMenu = Scene(renderer, e);
+	scenes.push_back(mainMenu);
 }

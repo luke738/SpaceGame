@@ -2,9 +2,13 @@
 #include <SDL.h>
 #include <vector>
 #include "Element.h"
+#include <iostream>
+#include <SDL_image.h>
 
-Scene::Scene()
+Scene::Scene(SDL_Renderer* render, std::vector<Element*> e)
 {
+	renderer = render;
+	elements = e;
 }
 
 Scene::~Scene()
@@ -13,17 +17,17 @@ Scene::~Scene()
 
 void Scene::loop()
 {
-	for each (Element e in elements)
+	for each (Element* e in elements)
 	{
-		e.tick();
+		e->tick();
 	}
-	render();
+	renderElements();
 }
 
-void Scene::render()
+void Scene::renderElements()
 {
-	for each (Element e in elements)
+	for each (Element* e in elements)
 	{
-		e.render(renderer);
+		e->renderSelf(renderer);
 	}
 }
