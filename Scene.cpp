@@ -5,6 +5,8 @@
 #include <iostream>
 #include <SDL_image.h>
 
+Scene::Scene() {}
+
 Scene::Scene(SDL_Renderer* render, std::vector<Element*> e)
 {
 	renderer = render;

@@ -9,9 +9,10 @@ class Scene
 	SDL_Renderer* renderer;
 
 public:
+	Scene();
 	Scene(SDL_Renderer* render, std::vector<Element*> e);
 	~Scene();
-	void loop(); //Carries out all operations of the frame
+	virtual void loop(); //Carries out all operations of the frame
 	void renderElements(); //Render all onscreen elements
 };
 

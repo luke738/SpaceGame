@@ -7,6 +7,7 @@
 #include <cmath>
 #include "Scene.h"
 #include "Element.h"
+#include "MenuScene.h"
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -63,7 +64,7 @@ int main(int argc, char* args[])
 	}
 
 	quitSDL();
-	std::cin.get();
+	//std::cin.get();
 	return 0;
 }
 
@@ -138,6 +139,6 @@ void createScenes() //At some point this will load things from a file of some so
 	Element *e1 = new Element(getVec(200, 200), "assets/images/dot.png", renderer);
 	e.push_back(e0);
 	e.push_back(e1);
-	Scene mainMenu = Scene(renderer, e);
+	Scene mainMenu = MenuScene(renderer, e);
 	scenes.push_back(mainMenu);
 }
