@@ -8,20 +8,21 @@
 #include "Scene.h"
 #include "Element.h"
 #include "MenuScene.h"
+#include "State.h"
+#include "Button.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 720;
 
 //SDL variables
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 
 //Current game state
-enum State {mainMenu=0, game, pauseMenu};
 State state = mainMenu;
 //Scenes
-std::vector<Scene> scenes;
+std::vector<Scene*> scenes;
 
 bool initSDL();
 void quitSDL();
@@ -30,7 +31,6 @@ void createScenes();
 
 int main(int argc, char* args[])
 {
-	bool quit = false;
 	SDL_Event e;
 
 	if (!initSDL())
@@ -41,24 +41,10 @@ int main(int argc, char* args[])
 	else
 	{
 		createScenes();
-		while (!quit)
+		while (state!=quit)
 		{
-			while (SDL_PollEvent(&e) != 0)
-			{
-				if (e.type == SDL_QUIT)
-				{
-					quit = true;
-				}
-				else if (e.type == SDL_KEYDOWN)
-				{
-					if (e.key.keysym.sym == SDLK_ESCAPE)
-					{
-						quit = true;
-					}
-				}
-			}
 			SDL_RenderClear(renderer);
-			scenes[state].loop();
+			scenes[state]->loop(&state);
 			SDL_RenderPresent(renderer);
 		}
 	}
@@ -135,10 +121,10 @@ void createScenes() //At some point this will load things from a file of some so
 {
 	//Main Menu
 	std::vector<Element*> e;
-	Element *e0 = new Element(getVec(100, 200), "assets/images/dot.png", renderer);
-	Element *e1 = new Element(getVec(200, 200), "assets/images/dot.png", renderer);
+	Element* e0 = new Element(getVec(100, 200), "assets/images/dot.png", renderer);
+	Element* e1 = new Button(getVec(200, 200), "assets/images/Quit.png", renderer, quit);
 	e.push_back(e0);
 	e.push_back(e1);
-	Scene mainMenu = MenuScene(renderer, e);
+	Scene* mainMenu = new MenuScene(renderer, e);
 	scenes.push_back(mainMenu);
 }

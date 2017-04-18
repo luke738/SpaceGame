@@ -5,6 +5,7 @@
 
 class Element
 {
+protected:
 	Texture texture;
 	Vector2 position;
 
@@ -15,5 +16,7 @@ public:
 	~Element();
 	virtual void tick(); //Update element. Functionality comes from child classes.
 	void renderSelf(SDL_Renderer* renderer);
+	Vector2 getTopLeft();
+	Vector2 getBottomRight();
 };
 

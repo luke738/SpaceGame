@@ -4,6 +4,8 @@
 #include "Element.h"
 #include <iostream>
 #include <SDL_image.h>
+#include "State.h"
+#include <iostream>
 
 Scene::Scene() {}
 
@@ -17,7 +19,7 @@ Scene::~Scene()
 {
 }
 
-void Scene::loop()
+void Scene::loop(State* state)
 {
 	for each (Element* e in elements)
 	{

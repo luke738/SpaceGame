@@ -28,5 +28,16 @@ void Element::tick()
 
 void Element::renderSelf(SDL_Renderer* renderer)
 {
-	texture.centerRender(position, renderer);
+	texture.render(position, renderer);
+}
+
+Vector2 Element::getTopLeft()
+{
+	return position;
+}
+
+Vector2 Element::getBottomRight()
+{
+	Vector2 temp = Vector2(position.x + texture.getWidth(), position.y + texture.getHeight());
+	return temp;
 }
